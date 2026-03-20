@@ -84,6 +84,7 @@ jobs:
           build-args: |
             BUILD_DATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
             ODOO_VERSION=${{ steps.odoo.outputs.ODOO_VERSION }}
+          provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
@@ -166,7 +167,9 @@ jobs:
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
         run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(jq -cr '.labels | to_entries | map("--annotation \"index:" + .key + "=" + .value + "\"") | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
 
       - name: Inspect image
