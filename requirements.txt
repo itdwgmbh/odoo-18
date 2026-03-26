@@ -1,3 +1,4 @@
+geoip2
 html2text
-python-pptx
 lxml_html_clean
+python-pptx
