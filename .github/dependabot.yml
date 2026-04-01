@@ -11,7 +11,7 @@ updates:
 
   # Docker base images
   - package-ecosystem: "docker"
-    directory: "/docker"
+    directory: "/"
     schedule:
       interval: weekly
 
@@ -23,6 +23,6 @@ updates:
 
   # Python dependencies
   - package-ecosystem: "pip"
-    directory: "/docker"
+    directory: "/"
     schedule:
       interval: weekly
