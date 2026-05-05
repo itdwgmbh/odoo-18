@@ -3,26 +3,46 @@
 
 version: 2
 updates:
-  # Dev Containers
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 5
+    groups:
+      devcontainers:
+        patterns:
+          - "*"
 
-  # Docker base images
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 5
+    groups:
+      docker:
+        patterns:
+          - "*"
 
-  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
-  # Python dependencies
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 5
+    groups:
+      pip:
+        patterns:
+          - "*"
