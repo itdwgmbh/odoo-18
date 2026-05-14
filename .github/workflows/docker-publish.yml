@@ -85,8 +85,8 @@ jobs:
             BUILD_DATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
             ODOO_VERSION=${{ steps.odoo.outputs.ODOO_VERSION }}
           provenance: false
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }}
+          cache-to: ${{ github.ref == 'refs/heads/main' && format('type=registry,ref=ghcr.io/{0}:buildcache-{1},mode=max', env.IMAGE_NAME, env.PLATFORM_PAIR) || '' }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }},oci-mediatypes=true
 
       - name: Export digest
@@ -115,7 +115,7 @@ jobs:
           retention-days: 1
 
   merge:
-    runs-on: [self-hosted, itdw]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -182,7 +182,7 @@ jobs:
           docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
 
   scan:
-    runs-on: [self-hosted, itdw]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read
