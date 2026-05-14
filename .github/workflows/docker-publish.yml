@@ -115,7 +115,7 @@ jobs:
           retention-days: 1
 
   merge:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, itdw]
     permissions:
       contents: read
       packages: write
@@ -182,7 +182,7 @@ jobs:
           docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
 
   scan:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, itdw]
     permissions:
       contents: read
       packages: read
