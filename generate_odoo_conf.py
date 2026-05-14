@@ -31,7 +31,11 @@ OPTIONS = [
     ("db_maxconn", "ODOO_DB_MAXCONN", "32"),
     ("db_sslmode", "ODOO_DB_SSLMODE", "prefer"),
     # Paths
-    ("addons_path", "ODOO_ADDONS_PATH", "/opt/odoo/src/addons,/mnt/extra-addons,/opt/odoo-customer-addons"),
+    (
+        "addons_path",
+        "ODOO_ADDONS_PATH",
+        "/opt/odoo/src/addons,/mnt/extra-addons,/opt/odoo-customer-addons",
+    ),
     ("data_dir", "ODOO_DATA_DIR", "/var/lib/odoo"),
     # Server
     ("proxy_mode", "ODOO_PROXY_MODE", "True"),
